@@ -1,0 +1,15 @@
+{
+  "name": "watson-temp-reporter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ds18b20-raspi": "^0.2.5",
+    "google-spreadsheet": "^2.0.4"
+  }
+}
