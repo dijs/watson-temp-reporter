@@ -1,26 +1,29 @@
 const sensor = require('ds18b20-raspi');
+const createQueue = require('siju');
+const debug = require('debug');
 const report = require('./report');
 
+const log = debug('Watson Temp Reporter');
 const reportingIntervalTime = 1000 * 60;
 const sensorList = sensor.list();
+const queue = createQueue(report);
 
 if (sensorList.length === 0) {
-  console.log('No sensors found');
+  log('No sensors found');
   process.exit();
 }
 
 function takeReading() {
   const sensorReadings = sensor.readAllC();
   if (sensorReadings.length === 0) {
-    console.log('No sensors readings');
+    log('No sensors readings');
     return;
   }
-  const value = sensorReadings[0].t;
-  report(value)
-    .then(() => console.log(`Reported: ${value}`))
-    .catch(console.error);
+  const temp = sensorReadings[0].t;
+  const payload = { temp, time: Date.now() };
+  queue.add(payload);
 }
 
 setInterval(takeReading, reportingIntervalTime);
 
-console.log('Started Temp Reporter');
+log('Started Temp Reporter');

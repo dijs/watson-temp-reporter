@@ -37,19 +37,19 @@ const updateCell = (cell, value) => new Promise(resolve => {
   cell.save(resolve);
 });
 
-const getRowByTime = () => {
-  const now = new Date();
+const getRowByTime = time => {
+  const date = new Date(time);
   // +2 For zero based index and then an extra row in the sheet
-  return Math.round((now.getHours() * 60 + now.getMinutes()) / 20) + 2;
+  return Math.round((date.getHours() * 60 + date.getMinutes()) / 20) + 2;
 };
 
 // +2 For zero based index and then an extra col in the sheet
-const getColByDay = () => Math.floor((Date.now() - +startDay) / (1000 * 60 * 60 * 24)) + 2;
+const getColByDay = time => Math.floor((time - +startDay) / (1000 * 60 * 60 * 24)) + 2;
 
-const report = temp => {
+const report = ({ temp, time }) => {
   return getDocument('18U7JRwR8dCnt7EOvyaAu6uUEZJQIYDomb5kU05j9yW4')
     .then(doc => getSheet(doc))
-    .then(sheet => getCell(sheet, getRowByTime(), getColByDay()))
+    .then(sheet => getCell(sheet, getRowByTime(time), getColByDay(time)))
     .then(cell => updateCell(cell, temp));
 }
 
