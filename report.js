@@ -40,7 +40,7 @@ const updateCell = (cell, value) => new Promise(resolve => {
 const getRowByTime = time => {
   const date = new Date(time);
   // +2 For zero based index and then an extra row in the sheet
-  return Math.round((date.getHours() * 60 + date.getMinutes()) / 20) + 2;
+  return Math.floor((date.getHours() * 60 + date.getMinutes()) / 20) + 2;
 };
 
 // +2 For zero based index and then an extra col in the sheet
