@@ -20,7 +20,7 @@ function takeReading() {
     return;
   }
   const temp = sensorReadings[0].t;
-  const payload = { temp, time: Date.now() };
+  const payload = { temp, time: new Date(), location: 'Outside' };
   queue.add(payload);
 }
 

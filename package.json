@@ -11,7 +11,8 @@
   "dependencies": {
     "debug": "^3.1.0",
     "ds18b20-raspi": "^0.2.5",
-    "google-spreadsheet": "^2.0.4",
+    "json-sql": "^0.3.11",
+    "pg": "^7.4.0",
     "siju": "0.0.1"
   }
 }
