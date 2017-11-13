@@ -4,7 +4,7 @@ const debug = require('debug');
 const report = require('./report');
 
 const log = debug('Watson Temp Reporter');
-const reportingIntervalTime = 1000 * 60;
+const reportingIntervalTime = 1000 * 60 * 10;
 const sensorList = sensor.list();
 const queue = createQueue(report);
 
