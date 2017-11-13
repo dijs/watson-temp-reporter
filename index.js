@@ -13,17 +13,30 @@ if (sensorList.length === 0) {
   process.exit();
 }
 
-function takeReading() {
+function getReading() {
   const sensorReadings = sensor.readAllC();
   if (sensorReadings.length === 0) {
     log('No sensors readings');
-    return;
+    return null;
   }
   const temp = sensorReadings[0].t;
-  const payload = { temp, time: new Date(), location: 'Outside' };
-  queue.add(payload);
+  return { temp, time: new Date(), location: 'Outside' };
+}
+
+function takeReading() {
+  const reading = getReading();
+  if (reading) {
+    queue.add(reading);
+  }
 }
 
 setInterval(takeReading, reportingIntervalTime);
 
 log('Started Temp Reporter');
+
+module.exports = () => {
+  const reading = getReading();
+  if (reading) {
+    report(reading);
+  }
+};
