@@ -31,13 +31,9 @@ const report = ({ temp, time, location }) => {
       location
     }
   });
-  return preformQuery(sql.query, sql.values)
-    .then(() => {
-      return new Promise((resolve) => {
-        const url = `http://richard.crushftp.com:5567/temp/${temp}/${location}/${time}`;
-        http.get(url, res => res.on('end', resolve));
-      });
-    });
+  const url = `http://richard.crushftp.com:5567/temp/${temp}/${location}/${time}`;
+  http.get(url);
+  return preformQuery(sql.query, sql.values);
 }
 
 module.exports = report;
