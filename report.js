@@ -1,5 +1,6 @@
 const jsonSql = require('json-sql')({ dialect: 'postgresql', namedValues: false });
 const { Client } = require('pg');
+const http = require('http');
 
 const dbConnection = 'postgres://jhkmcahc:ydVCsgT1sSsrpH_Wx8WgrQvQUXOyY0S6@horton.elephantsql.com:5432/jhkmcahc';
 
@@ -31,6 +32,12 @@ const report = ({ temp, time, location }) => {
     }
   });
   return preformQuery(sql.query, sql.values)
+    .then(() => {
+      return new Promise((resolve) => {
+        const url = `http://richard.crushftp.com:5567/temp/${temp}/${location}/${time}`;
+        http.get(url, res => res.on('end', resolve));
+      });
+    });
 }
 
 module.exports = report;
