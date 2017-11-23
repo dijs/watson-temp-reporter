@@ -20,7 +20,8 @@ function getReading() {
     return null;
   }
   const temp = sensorReadings[0].t;
-  return { temp, time: new Date(), location: 'Outside' };
+  const data = { temp, time: new Date(), location: 'Outside' };
+  log('Received data', data);
 }
 
 function takeReading() {
