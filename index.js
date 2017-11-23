@@ -1,10 +1,10 @@
+require('dotenv').config();
 const sensor = require('ds18b20-raspi');
 const createQueue = require('siju');
 const debug = require('debug');
 const report = require('./report');
 
 const log = debug('Watson Temp Reporter');
-const reportingIntervalTime = 1000 * 60 * 2;
 const sensorList = sensor.list();
 const queue = createQueue(report);
 
@@ -20,7 +20,7 @@ function getReading() {
     return null;
   }
   const temp = sensorReadings[0].t;
-  const data = { temp, time: new Date(), location: 'Outside' };
+  const data = { temp, time: new Date(), location: process.env.LOCATION };
   log('Received data', data);
 }
 
@@ -31,7 +31,7 @@ function takeReading() {
   }
 }
 
-setInterval(takeReading, reportingIntervalTime);
+setInterval(takeReading, parseInt(process.env.INTERVAL, 10));
 
 log('Started Temp Reporter');
 
