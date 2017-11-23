@@ -22,6 +22,7 @@ function getReading() {
   const temp = sensorReadings[0].t;
   const data = { temp, time: new Date(), location: process.env.LOCATION };
   log('Received data', data);
+  return data;
 }
 
 function takeReading() {
